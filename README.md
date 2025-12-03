@@ -18,7 +18,7 @@ O objetivo é criar uma solução de baixo custo, rápida e confiável para ambi
 
 ⚙️ Suporte a mensagens via HTTP ou sockets (dependendo da versão do projeto)
 
-##🧠 Tecnologias Utilizadas
+## 🧠 Tecnologias Utilizadas
 
 C++
 
@@ -42,7 +42,7 @@ Arduino IDE / PlatformIO
 
 Wi-Fi integrado
 
-##📌 Arquitetura do Sistema
+## 📌 Arquitetura do Sistema
 
 O Python captura e processa imagens.
 
@@ -57,7 +57,7 @@ Ao reconhecer uma pessoa, envia um comando pela rede ao ESP32.
 
 O ESP32 aciona a fechadura eletrônica e registra o evento.
 
-##🛠️ Possíveis Expansões
+## 🛠️ Possíveis Expansões
 
 Integração via MQTT
 
