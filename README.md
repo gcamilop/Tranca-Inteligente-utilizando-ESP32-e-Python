@@ -4,6 +4,8 @@
 Este projeto implementa um sistema de controle de acesso inteligente, combinando reconhecimento facial em Python com o acionamento de uma tranca eletrônica controlada por ESP32.
 O objetivo é criar uma solução de baixo custo, rápida e confiável para ambientes de construção civil.
 
+![Codigo Python com reconhecimento facial](https://github.com/user-attachments/assets/584642d8-1945-46c6-955d-8dcbf3a9cc34)
+
 ## 🚀 Funcionalidades
 
 🔍 Reconhecimento facial em tempo real usando OpenCV
@@ -60,7 +62,6 @@ Protoboard
 
 ![WhatsApp Image 2025-11-25 at 06 33 58](https://github.com/user-attachments/assets/5d117990-4232-49ed-9f04-d1d4b36b949a)
 
-
 ## 📌 Arquitetura do Sistema
 
 O Python captura, processa imagens, identifica rostos autorizados e ao reconhecer uma pessoa, envia um comando pela rede ao ESP32. Para que isso aconteça se faz necessario que algumas etapas listadas abaixo:
@@ -107,21 +108,9 @@ def send_servo_command(angle, host="192.168.1.10", port=80, timeout=10, path="/s
         return False, str(e)
 ```
 
-Enviar comandos ao servo
+O ESP32 aciona a fechadura eletrônica.
 
-```python
-def send_servo_command(angle, host="192.168.1.10", port=80, timeout=10, path="/servo"):
-    angle = int(max(0, min(180, angle)))
-    url = f"http://{host}:{port}{path}"
-    try:
-        resp = requests.get(url, params={"angle": str(angle)}, timeout=timeout)
-        resp.raise_for_status()
-        return True, resp.text
-    except requests.RequestException as e:
-        return False, str(e)
-```
 
-O ESP32 aciona a fechadura eletrônica e registra o evento.
 
 ## 🛠️ Possíveis Expansões
 
