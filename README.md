@@ -4,7 +4,7 @@
 Este projeto implementa um sistema de controle de acesso inteligente, combinando reconhecimento facial em Python com o acionamento de uma tranca eletrônica controlada por ESP32.
 O objetivo é criar uma solução de baixo custo, rápida e confiável para ambientes residenciais, comerciais e acadêmicos.
 
-##🚀 Funcionalidades
+## 🚀 Funcionalidades
 
 🔍 Reconhecimento facial em tempo real usando OpenCV
 
