@@ -20,19 +20,22 @@ O objetivo é criar uma solução de baixo custo, rápida e confiável para ambi
 
 ## 🧠 Tecnologias Utilizadas
 
-C++
-
-Backend / Reconhecimento
-
-Python
-
-OpenCV
+Python 3.10.0
+pip 25.3
+cmake 4.1.2
+face-recognition 1.3.0
+OpenCV 4.12.0.88
+cvzone 1.6.1
 
 NumPy
 
 LBPH para reconhecimento facial
 
 Bibliotecas de comunicação via rede
+
+C++
+
+Backend / Reconhecimento
 
 Hardware / IoT
 
@@ -44,16 +47,12 @@ Wi-Fi integrado
 
 ## 📌 Arquitetura do Sistema
 
-O Python captura e processa imagens.
+O Python captura, processa imagens, identifica rostos autorizados e ao reconhecer uma pessoa, envia um comando pela rede ao ESP32.
 
 ```python
 print("Olá, mundo!")
 ```
 
-
-O sistema identifica rostos autorizados.
-
-Ao reconhecer uma pessoa, envia um comando pela rede ao ESP32.
 
 O ESP32 aciona a fechadura eletrônica e registra o evento.
 
