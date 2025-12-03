@@ -110,6 +110,208 @@ def send_servo_command(angle, host="192.168.1.10", port=80, timeout=10, path="/s
 
 O ESP32 aciona a fechadura eletrônica.
 
+Pagina web login
+
+```C++
+String loginPage = R"rawliteral(
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>Login ESP32</title>
+<style>
+body { font-family: Arial; text-align:center; margin-top:50px; }
+input { padding:10px; margin:5px; }
+button { padding:10px 20px; }
+</style>
+</head>
+<body>
+<h2>Login Necessário</h2>
+<form action="/login" method="POST">
+  <input type="text" name="user" placeholder="Usuário"><br>
+  <input type="password" name="pass" placeholder="Senha"><br>
+  <button type="submit">Entrar</button>
+</form>
+</body>
+</html>
+)rawliteral";
+
+```
+
+Pagina web controle servo
+
+```C++
+String controlPage = R"rawliteral(
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>Controle do Servo ESP32</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 40px;
+}
+.container {
+  width: 280px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  background: #f5f5f5;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+h2 {
+  margin-bottom: 20px;
+}
+input[type=number] {
+  width: 80px;
+  padding: 10px;
+  font-size: 18px;
+  margin-top: 10px;
+}
+button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+#status {
+  margin-top: 20px;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<div class='container'>
+  <h2>Controle do Servo</h2>
+
+  <p>Digite o ângulo (0–180):</p>
+
+  <!-- CAMPO COM LIMITES HTML -->
+  <input type='number' id='angleInput' value='90' min='0' max='180' required>
+
+  <br><br>
+  <button onclick='sendAngle()'>Mover Servo</button>
+
+  <div id='status'></div>
+</div>
+
+<script>
+function sendAngle() {
+  const angle = parseInt(document.getElementById("angleInput").value);
+
+  // VALIDAÇÃO JAVASCRIPT
+  if (isNaN(angle) || angle < 0 || angle > 180) {
+    document.getElementById("status").innerHTML =
+      "Valor inválido! Digite entre 0 e 180 graus.";
+    return;
+  }
+
+  // ENVIO AO ESP32
+  fetch(`/servo?angle=${angle}`)
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("status").innerHTML =
+        "Servo movido para " + data.angle + "°";
+    })
+    .catch(error => {
+      document.getElementById("status").innerHTML =
+        "Erro ao comunicar com o ESP32.";
+    });
+}
+</script>
+
+</body>
+</html>
+)rawliteral";
+
+```
+
+Pagina web login
+
+```C++
+String loginPage = R"rawliteral(
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>Login ESP32</title>
+<style>
+body { font-family: Arial; text-align:center; margin-top:50px; }
+input { padding:10px; margin:5px; }
+button { padding:10px 20px; }
+</style>
+</head>
+<body>
+<h2>Login Necessário</h2>
+<form action="/login" method="POST">
+  <input type="text" name="user" placeholder="Usuário"><br>
+  <input type="password" name="pass" placeholder="Senha"><br>
+  <button type="submit">Entrar</button>
+</form>
+</body>
+</html>
+)rawliteral";
+
+```
+
+Pagina web login
+
+```C++
+String loginPage = R"rawliteral(
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>Login ESP32</title>
+<style>
+body { font-family: Arial; text-align:center; margin-top:50px; }
+input { padding:10px; margin:5px; }
+button { padding:10px 20px; }
+</style>
+</head>
+<body>
+<h2>Login Necessário</h2>
+<form action="/login" method="POST">
+  <input type="text" name="user" placeholder="Usuário"><br>
+  <input type="password" name="pass" placeholder="Senha"><br>
+  <button type="submit">Entrar</button>
+</form>
+</body>
+</html>
+)rawliteral";
+
+```
+
+Pagina web login
+
+```C++
+String loginPage = R"rawliteral(
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>Login ESP32</title>
+<style>
+body { font-family: Arial; text-align:center; margin-top:50px; }
+input { padding:10px; margin:5px; }
+button { padding:10px 20px; }
+</style>
+</head>
+<body>
+<h2>Login Necessário</h2>
+<form action="/login" method="POST">
+  <input type="text" name="user" placeholder="Usuário"><br>
+  <input type="password" name="pass" placeholder="Senha"><br>
+  <button type="submit">Entrar</button>
+</form>
+</body>
+</html>
+)rawliteral";
+
+```
 
 
 ## 🛠️ Possíveis Expansões
@@ -125,7 +327,3 @@ Reconhecimento aprimorado com modelos DNN ou Mediapipe (utilizado para face livi
 Reconhecimento de EPI
 
 Troca do servo motor por um tranca elétrica solenóide
-
-## 📷 Objetivo
-
-Fornecer uma solução prática e acessível de automação de acesso, unindo visão computacional com IoT.
