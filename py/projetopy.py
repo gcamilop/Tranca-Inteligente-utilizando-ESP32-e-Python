@@ -74,18 +74,18 @@ while True:
 
         if comp:
             cvzone.putTextRect(img,f'Autorizado: {nome}',(50,50),colorR=(0,255,0),font=1)
-            #aberto a porta
-            # success, msg = send_servo_command(135, host="192.168.1.10")
-            # if success:
-            #     print("Porta Aberta, Comando Enviado OK:", msg)
-            # else:
-            #     print("Erro ao enviar comando:", msg)
+            aberto a porta
+             success, msg = send_servo_command(135, host="192.168.1.10")
+             if success:
+                 print("Porta Aberta, Comando Enviado OK:", msg)
+             else:
+                 print("Erro ao enviar comando:", msg)
 
         else:
             cvzone.putTextRect(img,'Nao Autorizado',(50,50),colorR=(0,0,255))
         #fechando a porta
-        #success, msg = send_servo_command(45, host="192.168.1.10")
-        #print("Porta Fechada, Comando Enviado OK:", msg)
+        success, msg = send_servo_command(45, host="192.168.1.10")
+        print("Porta Fechada, Comando Enviado OK:", msg)
 
 
     cv2.imshow('IMG',img)
