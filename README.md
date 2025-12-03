@@ -1,5 +1,5 @@
 # Tranca-Inteligente-utilizando-ESP32-e-Python
-##🏠🔒 Tranca Inteligente com ESP32 e Reconhecimento Facial (Python + ESP32)
+# 🏠🔒 Tranca Inteligente com ESP32 e Reconhecimento Facial (Python + ESP32)
 
 Este projeto implementa um sistema de controle de acesso inteligente, combinando reconhecimento facial em Python com o acionamento de uma tranca eletrônica controlada por ESP32.
 O objetivo é criar uma solução de baixo custo, rápida e confiável para ambientes residenciais, comerciais e acadêmicos.
