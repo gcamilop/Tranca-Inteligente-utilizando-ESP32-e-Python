@@ -5,8 +5,8 @@
 #include <ESP32Servo.h>
 
 
-const char* ssid = "TONILMA_2.4";
-const char* password = "205639gc";
+const char* ssid = "SUA REDE";
+const char* password = "Sua Senha";
 
 IPAddress local_IP(192, 168, 1, 120);  // IP Fixo 
 IPAddress gateway(192, 168, 1, 1);     // IP do roteador MUDAR NA DOCUMENTAÇÃO
