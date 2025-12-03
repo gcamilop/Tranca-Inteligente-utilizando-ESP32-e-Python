@@ -14,24 +14,31 @@ O objetivo é criar uma solução de baixo custo, rápida e confiável para ambi
 
 📡 Envio e recebimento de comandos pela rede
 
-🧪 Logs e feedback instantâneo no console
+Avenida Fernandes da cunha num 85 em frente ao hotel mares ao lado do laboratorio saving
 
-⚙️ Suporte a mensagens via HTTP ou sockets (dependendo da versão do projeto)
+🧪 Logs e feedback instantâneo no console
 
 ## 🧠 Tecnologias Utilizadas
 
+### ⚙️ Para desenvolver o reconhecimento facial:
+
 Python 3.10.0
+
 pip 25.3
+
 cmake 4.1.2
+
 face-recognition 1.3.0
+
 OpenCV 4.12.0.88
+
 cvzone 1.6.1
 
-NumPy
+requests 2.32.5
 
-LBPH para reconhecimento facial
+argparse 1.4.0
 
-Bibliotecas de comunicação via rede
+### ⚙️ Para desenvolver o sistema do ESP32:
 
 C++
 
