@@ -31,7 +31,7 @@ else:
 
 #print('Base carregada!')
 
-#comparar encodificação
+#comparar encodificaÃ§Ã£o
 def compararEnc(encImg):
     for id,enc in enumerate(encods):
         comp = fr.compare_faces([encImg],enc)
@@ -90,4 +90,5 @@ while True:
 
     cv2.imshow('IMG',img)
     cv2.waitKey(1)
+
 
