@@ -2,8 +2,8 @@
 #include <WebServer.h>
 #include <ESP32Servo.h>
 
-const char* ssid = "TONILMA_2.4";
-const char* password = "205639gc";
+const char* ssid = "Sua Rede";
+const char* password = "Sua Senha";
 
 const int servoPin = 25;
 WebServer server(80);
@@ -18,8 +18,8 @@ IPAddress secondaryDNS(0, 0, 0, 0);
 
 // ------- LOGIN E VALIDAÇÃO -------
 bool autenticado = false;
-String USER = "admin"; 
-String PASS = "1234";  
+String USER = "marte"; 
+String PASS = "plutao";  
 
 String loginPage = R"rawliteral(
 <!DOCTYPE html>
