@@ -94,23 +94,51 @@ def compararEnc(encImg):
 
 ```
 
+Fazer login no web server do ESP32
+
+```python
+def login_esp32(user, password, host="192.168.1.2", port=80):
+    url = f"http://{host}:{port}/login"
+    try:
+        resp = requests.post(url, data={"user": user, "pass": password}, timeout=5)
+        resp.raise_for_status()
+        print("Login realizado!")
+        return True
+    except Exception as e:
+        print("Erro no login:", e)
+        return False
+
+```
+
 Enviar comandos ao servo
 
 ```python
-def send_servo_command(angle, host="192.168.1.10", port=80, timeout=10, path="/servo"):
+def send_servo_command(angle, host="192.168.1.2", port=80):
     angle = int(max(0, min(180, angle)))
-    url = f"http://{host}:{port}{path}"
+    url = f"http://{host}:{port}/servo"
+
     try:
-        resp = requests.get(url, params={"angle": str(angle)}, timeout=timeout)
+        resp = requests.get(url, params={"angle": angle}, timeout=5)
         resp.raise_for_status()
-        return True, resp.text
-    except requests.RequestException as e:
+        return True, resp.json()
+    except Exception as e:
         return False, str(e)
+
 ```
 
-O ESP32 aciona a fechadura eletrônica.
+Como o ESP32 aciona a fechadura eletrônica.
 
-Pagina web login
+Bbiliotecas necessarias:
+
+```C++
+
+#include <WiFi.h>
+#include <WebServer.h>
+#include <ESP32Servo.h>
+
+```
+
+Pagina web login:
 
 ```C++
 String loginPage = R"rawliteral(
@@ -138,7 +166,7 @@ button { padding:10px 20px; }
 
 ```
 
-Pagina web controle servo
+Pagina web controle servo:
 
 ```C++
 String controlPage = R"rawliteral(
@@ -229,90 +257,81 @@ function sendAngle() {
 
 ```
 
-Pagina web login
+Validação de quem esta acessando:
 
 ```C++
-String loginPage = R"rawliteral(
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset='UTF-8'>
-<title>Login ESP32</title>
-<style>
-body { font-family: Arial; text-align:center; margin-top:50px; }
-input { padding:10px; margin:5px; }
-button { padding:10px 20px; }
-</style>
-</head>
-<body>
-<h2>Login Necessário</h2>
-<form action="/login" method="POST">
-  <input type="text" name="user" placeholder="Usuário"><br>
-  <input type="password" name="pass" placeholder="Senha"><br>
-  <button type="submit">Entrar</button>
-</form>
-</body>
-</html>
-)rawliteral";
+
+void checkSession() {
+  if (!autenticado) {
+    server.sendHeader("Location", "/login");
+    server.send(302, "text/plain", "");
+  }
+}
+
+
+```
+Redireciona para pagina do servo pós login:
+
+```C++
+
+void handleRoot() {
+  if (!autenticado) {
+    server.send(200, "text/html", loginPage);
+    return;
+  }
+
+  server.send(200, "text/html", controlPage);
+}
+
 
 ```
 
-Pagina web login
+Processa o login:
 
 ```C++
-String loginPage = R"rawliteral(
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset='UTF-8'>
-<title>Login ESP32</title>
-<style>
-body { font-family: Arial; text-align:center; margin-top:50px; }
-input { padding:10px; margin:5px; }
-button { padding:10px 20px; }
-</style>
-</head>
-<body>
-<h2>Login Necessário</h2>
-<form action="/login" method="POST">
-  <input type="text" name="user" placeholder="Usuário"><br>
-  <input type="password" name="pass" placeholder="Senha"><br>
-  <button type="submit">Entrar</button>
-</form>
-</body>
-</html>
-)rawliteral";
+
+void handleLogin() {
+  String user = server.arg("user");
+  String pass = server.arg("pass");
+
+  if (user == USER && pass == PASS) {
+    autenticado = true;
+    server.send(200, "text/html", controlPage);
+  } else {
+    autenticado = false;
+    server.send(403, "text/html", "<h1>Login inválido!</h1><a href='/'>Tentar novamente</a>");
+  }
+}
+
 
 ```
 
-Pagina web login
+Processa o login:
 
 ```C++
-String loginPage = R"rawliteral(
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset='UTF-8'>
-<title>Login ESP32</title>
-<style>
-body { font-family: Arial; text-align:center; margin-top:50px; }
-input { padding:10px; margin:5px; }
-button { padding:10px 20px; }
-</style>
-</head>
-<body>
-<h2>Login Necessário</h2>
-<form action="/login" method="POST">
-  <input type="text" name="user" placeholder="Usuário"><br>
-  <input type="password" name="pass" placeholder="Senha"><br>
-  <button type="submit">Entrar</button>
-</form>
-</body>
-</html>
-)rawliteral";
+
+void handleServo() {
+  if (!autenticado) {
+    server.send(200, "text/html", loginPage);
+    return;
+  }
+
+  if (!server.hasArg("angle")) {
+    server.send(400, "application/json", "{\"error\":\"missing angle\"}");
+    return;
+  }
+
+  int angle = server.arg("angle").toInt();
+  angle = constrain(angle, 0, 180);
+  myServo.write(angle);
+
+  String payload = "{\"angle\":" + String(angle) + "}";
+  server.send(200, "application/json", payload);
+
+  delay(10000);
+}
 
 ```
-
 
 ## 🛠️ Possíveis Expansões
 
