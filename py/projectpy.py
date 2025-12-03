@@ -28,7 +28,7 @@ else:
     sys.exit('Base de Dados Vazia')
 
 #Faz o login no web server do ESP32
-def login_esp32(user, password, host="192.168.1.2", port=80):
+def login_esp32(user, password, host="192.168.1.120", port=80):
     url = f"http://{host}:{port}/login"
     try:
         resp = requests.post(url, data={"user": user, "pass": password}, timeout=5)
@@ -40,7 +40,7 @@ def login_esp32(user, password, host="192.168.1.2", port=80):
         return False
 
 #Envia o comando para o servo motor do Esp32
-def send_servo_command(angle, host="192.168.1.2", port=80):
+def send_servo_command(angle, host="192.168.1.120", port=80):
     angle = int(max(0, min(180, angle)))
     url = f"http://{host}:{port}/servo"
 
@@ -51,7 +51,7 @@ def send_servo_command(angle, host="192.168.1.2", port=80):
     except Exception as e:
         return False, str(e)
 
-#comparar encodificação
+#comparar encodificaÃ§Ã£o
 def compararEnc(encImg):
     for id,enc in enumerate(encods):
         comp = fr.compare_faces([encImg],enc)
@@ -59,7 +59,7 @@ def compararEnc(encImg):
             break
     return comp[0], nomes[id]
 
-login_esp32("admin", "1234")
+login_esp32("marte", "plutao")
 video = cv2.VideoCapture(0)
 
 faceLoc = []
@@ -101,4 +101,5 @@ while True:
 
 
     cv2.imshow('IMG',img)
+
     cv2.waitKey(1)
