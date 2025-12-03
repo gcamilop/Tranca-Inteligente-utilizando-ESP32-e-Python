@@ -14,8 +14,6 @@ O objetivo é criar uma solução de baixo custo, rápida e confiável para ambi
 
 📡 Envio e recebimento de comandos pela rede
 
-Avenida Fernandes da cunha num 85 em frente ao hotel mares ao lado do laboratorio saving
-
 🧪 Logs e feedback instantâneo no console
 
 ## 🧠 Tecnologias Utilizadas
@@ -42,24 +40,83 @@ argparse 1.4.0
 
 C++
 
-Backend / Reconhecimento
+Bibliotecas: WIFI.h,    WebServer.h,       Esp32Servo.h
 
-Hardware / IoT
+HTML
+
+Arduino IDE
+
+### ⚙️ Hardware necessario para o protótipo:
 
 ESP32
 
-Arduino IDE / PlatformIO
+Servo motor SG90 (em caso de uso real pode ser substituido por uma tranca solenóide, porém o projeto abaixo não contém essa adaptação ainda)
 
-Wi-Fi integrado
+Fonte 5V / 1 A
+
+Cabos Jumper
+
+Protoboard
 
 ## 📌 Arquitetura do Sistema
 
-O Python captura, processa imagens, identifica rostos autorizados e ao reconhecer uma pessoa, envia um comando pela rede ao ESP32.
+O Python captura, processa imagens, identifica rostos autorizados e ao reconhecer uma pessoa, envia um comando pela rede ao ESP32. Para que isso aconteça se faz necessario que algumas etapas listadas abaixo:
+
+Carregamento da base de dados de pessoas autorizadas (Necessario criar uma pasta no mesmo diretorio que o programa com nome 'Pessoas' onde ficaram as pessoas autorizadas com o acesso)
 
 ```python
-print("Olá, mundo!")
+for arquivo in lista:
+    img = cv2.imread(f'Pessoas/{arquivo}')
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    encods.append(fr.face_encodings(img)[0])
+    nomes.append(os.path.splitext(arquivo)[0])
+    
+ 
+if nomes != []:
+    print('Base carregada!')
+else:
+    sys.exit('Base de Dados Vazia')
 ```
 
+Comparar encodificação
+
+```python
+def compararEnc(encImg):
+    for id,enc in enumerate(encods):
+        comp = fr.compare_faces([encImg],enc)
+        if comp[0]:
+            break
+    return comp[0], nomes[id]
+
+```
+
+Enviar comandos ao servo
+
+```python
+def send_servo_command(angle, host="192.168.1.10", port=80, timeout=10, path="/servo"):
+    angle = int(max(0, min(180, angle)))
+    url = f"http://{host}:{port}{path}"
+    try:
+        resp = requests.get(url, params={"angle": str(angle)}, timeout=timeout)
+        resp.raise_for_status()
+        return True, resp.text
+    except requests.RequestException as e:
+        return False, str(e)
+```
+
+Enviar comandos ao servo
+
+```python
+def send_servo_command(angle, host="192.168.1.10", port=80, timeout=10, path="/servo"):
+    angle = int(max(0, min(180, angle)))
+    url = f"http://{host}:{port}{path}"
+    try:
+        resp = requests.get(url, params={"angle": str(angle)}, timeout=timeout)
+        resp.raise_for_status()
+        return True, resp.text
+    except requests.RequestException as e:
+        return False, str(e)
+```
 
 O ESP32 aciona a fechadura eletrônica e registra o evento.
 
