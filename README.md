@@ -66,7 +66,7 @@ Protoboard
 
 O Python captura, processa imagens, identifica rostos autorizados e ao reconhecer uma pessoa, envia um comando pela rede ao ESP32. Para que isso aconteça se faz necessario que algumas etapas listadas abaixo:
 
-Carregamento da base de dados de pessoas autorizadas (Necessario criar uma pasta no mesmo diretorio que o programa com nome 'Pessoas' onde ficaram as pessoas autorizadas com o acesso)
+Carregamento da base de dados de pessoas autorizadas (Necessario criar uma pasta no mesmo diretorio que o programa com nome 'Pessoas' onde ficaram as pessoas autorizadas com o acesso):
 
 ```python
 for arquivo in lista:
@@ -82,7 +82,7 @@ else:
     sys.exit('Base de Dados Vazia')
 ```
 
-Comparar encodificação
+Comparar encodificação:
 
 ```python
 def compararEnc(encImg):
@@ -94,7 +94,7 @@ def compararEnc(encImg):
 
 ```
 
-Fazer login no web server do ESP32
+Fazer login no web server do ESP32:
 
 ```python
 def login_esp32(user, password, host="192.168.1.2", port=80):
@@ -110,7 +110,7 @@ def login_esp32(user, password, host="192.168.1.2", port=80):
 
 ```
 
-Enviar comandos ao servo
+Enviar comandos ao servo:
 
 ```python
 def send_servo_command(angle, host="192.168.1.2", port=80):
@@ -126,7 +126,7 @@ def send_servo_command(angle, host="192.168.1.2", port=80):
 
 ```
 
-Como o ESP32 aciona a fechadura eletrônica.
+Abaixo temos como o ESP32 valida o acesso ao seu webserver e aciona a fechadura eletrônica:
 
 Bbiliotecas necessarias:
 
