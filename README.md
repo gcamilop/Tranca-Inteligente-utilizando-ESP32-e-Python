@@ -324,6 +324,8 @@ void handleServo() {
   int angle = server.arg("angle").toInt();
   angle = constrain(angle, 0, 180);
   myServo.write(angle);
+  Serial.print("Angulo atual: ");
+  Serial.println(angle);
 
   String payload = "{\"angle\":" + String(angle) + "}";
   server.send(200, "application/json", payload);
